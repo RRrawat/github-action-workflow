@@ -1,9 +1,9 @@
 name: Uploading zip to S3
 
-#on:
- # push:
- #   branches: [ main ]
- # workflow_dispatch:
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
       - name: convert to zip
         run: |
           cd ${{github.workspace}}/
-          zip test.zip ${{github.workspace}}/Test/
+          zip test.zip ${{github.workspace}}/TestAction/
       - name: Deploy files to S3 bucket 
         run: |
           aws s3 sync ${{github.workspace}}/ s3://testbuckettodeletedata/ --exclude "*" --include "*.zip"
