@@ -1,0 +1,9 @@
+version: 0.0
+os: windows
+files:
+  - source: REFERENCE
+    destination: C:\Vectra\Auto2D_Server\Reference      
+hooks:
+  BeforeInstall:
+    - location: remove.bat
+      runas: Administrator
