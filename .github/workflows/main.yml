@@ -1,0 +1,27 @@
+name: Uploading zip to S3
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: convert to zip
+        run: |
+          cd ${{github.workspace}}/
+          zip test.zip ${{github.workspace}}/Test/
+      - name: Deploy files to S3 bucket 
+        run: |
+          aws s3 sync ${{github.workspace}}/ s3://testbuckettodeletedata/ --exclude "*" --include "*.zip"
