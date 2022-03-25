@@ -20,8 +20,7 @@ jobs:
           aws-region: us-east-1
       - name: convert to zip
         run: |
-          cd ${{github.workspace}}/
-          zip test.zip ${{github.workspace}}/TestAction/
+          zip test.zip TestAction/
       - name: Deploy files to S3 bucket 
         run: |
           aws s3 sync ${{github.workspace}}/ s3://testbuckettodeletedata/test2/Action/ --exclude "*" --include "*.zip"
