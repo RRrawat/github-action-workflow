@@ -1,4 +1,4 @@
-name: Uploading zip to S3 ${{ github.event.inputs.file }}
+name: Uploading zip to S3
 on:
    workflow_dispatch:
      inputs:
