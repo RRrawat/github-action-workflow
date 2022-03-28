@@ -5,6 +5,7 @@ on:
        release_tag:
          description: Enter tag name
          required: true
+         default: string
        release_summary:
          description: Enter release name
          required: true
