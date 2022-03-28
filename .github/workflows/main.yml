@@ -5,12 +5,36 @@ on:
        release_tag:
          description: Enter tag name
          required: true
+       release_summary:
+         description: Enter release name
+         required: true
+       release_description:
+         description: Enter Body for release 
+         required: true
+       file1:
+            type: choice
+            description: Choose file/folder to deploy to Production & Gdrive
+            options:
+              - None
+              - PreProcess_Algo.exe
+              - Unit_Alg.exe
+              - ADA_Alg.exe
+              - CoreAlg.exe
+              - TEMPLATES
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - name: Input Variables
+        run: |
+          echo ${{ github.event.inputs.release_tag }}
+          echo ${{ github.event.inputs.release_summary }}
+          echo ${{ github.event.inputs.release_description }}
+          echo ${{ github.event.inputs.file1 }}
+
+         
       
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -24,4 +48,4 @@ jobs:
       - name: Deploy files to S3 bucket 
         run: |
           aws s3 sync ${{github.workspace}}/ s3://testbuckettodeletedata/test2/Action/ --exclude "*" --include "*.zip"
-          echo ${{ github.event.inputs.release_tag }}
+         
