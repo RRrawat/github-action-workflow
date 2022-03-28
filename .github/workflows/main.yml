@@ -5,22 +5,6 @@ on:
        release_tag:
          description: Enter tag name
          required: true
-       release_summary:
-         description: Enter release name
-         required: true
-       release_description:
-         description: Enter Body for release 
-         required: true
-       file:
-            type: choice
-            description: Choose file/folder to deploy to Production & Gdrive
-            options:
-              - None
-              - PreProcess_Algo.exe
-              - Unit_Alg.exe
-              - ADA_Alg.exe
-              - CoreAlg.exe
-              - TEMPLATES
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,3 +24,4 @@ jobs:
       - name: Deploy files to S3 bucket 
         run: |
           aws s3 sync ${{github.workspace}}/ s3://testbuckettodeletedata/test2/Action/ --exclude "*" --include "*.zip"
+          echo release_tag
