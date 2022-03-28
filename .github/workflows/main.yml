@@ -24,4 +24,4 @@ jobs:
       - name: Deploy files to S3 bucket 
         run: |
           aws s3 sync ${{github.workspace}}/ s3://testbuckettodeletedata/test2/Action/ --exclude "*" --include "*.zip"
-          echo release_tag
+          echo ${{ github.event.inputs.release_tag }}
