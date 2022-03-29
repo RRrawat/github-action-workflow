@@ -1,13 +1,37 @@
 name: Uploading zip to S3
 on:
    workflow_dispatch:
-   
+     inputs:
+       release_tag:
+         description: Enter tag name
+         required: true
+       release_summary:
+         description: Enter release name
+         required: true
+         default: ${{ github.event.inputs.file1 }}
+       release_description:
+         description: Enter Body for release 
+         required: true
+       file1:
+            type: choice
+            description: Choose file/folder to deploy to Production & Gdrive
+            options:
+              - None
+              - PreProcess_Algo.exe
+              - Unit_Alg.exe
+              - ADA_Alg.exe
+              - CoreAlg.exe
+              - TEMPLATES   
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - name: Input variable
+        run: |
+            echo ${{ github.event.inputs.file1 }}
+            echo ${{ github.event.inputs.release_summary }}
       
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
