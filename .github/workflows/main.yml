@@ -8,7 +8,6 @@ on:
        release_summary:
          description: Enter release name
          required: true
-         default: ${{ github.event.inputs.file1 }}
        release_description:
          description: Enter Body for release 
          required: true
