@@ -1,1 +1,2 @@
-testing the github action for ziping the file and uploading it to the s3
+testing the github action for ziping the file and uploading it to the s3.
+.
