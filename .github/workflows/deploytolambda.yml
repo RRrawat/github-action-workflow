@@ -29,10 +29,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1 
+          
  #     - name: convert to zip
  #       run: |
  #         cd ${{github.workspace}}/
  #         zip vectraAutomation.zip /home/runner/work/vectra-automation/vectra-automation/vectra-automation-service/target/vectra-automation-service-0.0.1-SNAPSHOT-jar-with-dependencies.jar	    
+      
       - name: Deploy files to S3 bucket 
         run: |
           aws s3 sync ${{github.workspace}}/ s3://testbuckettodeletedata/test2/Action/ --exclude "*" --include "*.jar"
