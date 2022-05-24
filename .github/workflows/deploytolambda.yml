@@ -1,1 +1,41 @@
+name: DEV_Deploylambda
 
+#on: [ push ]
+on:
+   workflow_dispatch:   
+#      inputs:
+#         access_key:
+#            description: Enter Access Key
+#            required: true
+#         secret_key:
+#            description: Enter Secret Key
+#            required: true       
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Build with Maven 
+        run: mvn clean package --file vectra-automation-service/pom.xml
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1 
+ #     - name: convert to zip
+ #       run: |
+ #         cd ${{github.workspace}}/
+ #         zip vectraAutomation.zip /home/runner/work/vectra-automation/vectra-automation/vectra-automation-service/target/vectra-automation-service-0.0.1-SNAPSHOT-jar-with-dependencies.jar	    
+      - name: Deploy files to S3 bucket 
+        run: |
+          aws s3 cp /home/runner/work/vectra-automation/vectra-automation/vectra-automation-service/target/vectra-automation-service-0.0.1-SNAPSHOT-jar-with-dependencies.jar s3://vectra-lambdabuild-test/vectra/
+      - name: Update Lambda function code
+        run: |
+          aws lambda update-function-code --function-name Start_and_Stop_instances --s3-bucket vectra-lambdabuild-test --s3-key vectra/vectra-automation-service-0.0.1-SNAPSHOT-jar-with-dependencies.jar
