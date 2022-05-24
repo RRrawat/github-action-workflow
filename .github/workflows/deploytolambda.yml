@@ -1,15 +1,15 @@
 name: DEV_Deploylambda
 
-on: [ push ]
-#on:
-#   workflow_dispatch:   
-#      inputs:
-#         access_key:
-#            description: Enter Access Key
-#            required: true
-#         secret_key:
-#            description: Enter Secret Key
-#            required: true       
+#on: [ push ]
+on:
+   workflow_dispatch:   
+      inputs:
+         access_key:
+            description: Enter Access Key
+            required: true
+         secret_key:
+            description: Enter Secret Key
+            required: true       
 
 
 jobs:
