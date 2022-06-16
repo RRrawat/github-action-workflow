@@ -1,6 +1,4 @@
 name: DEV_Deploylambda
-
-#on: [ push ]
 on:
    workflow_dispatch:   
       inputs:
